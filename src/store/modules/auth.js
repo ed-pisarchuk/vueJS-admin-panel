@@ -7,6 +7,14 @@ export const auth = {
         loggedIn: false
     },
     actions: {
+        checkAuth({commit, rootGetters}){
+            new AuthService(rootGetters.baseURL).checkAuth().then(result => {
+                if (!result.valid) {
+                    commit('loginFailure')
+                }
+                return Promise.resolve(result)
+            })
+        },
         setError({commit}, error){
             commit('setError', error, {root: true})
         },
@@ -14,7 +22,7 @@ export const auth = {
             const service = new AuthService(rootGetters.baseURL)
             await service.createItem(userData)
             return service.getUser()
-                .then(async user => {
+                .then(user => {
                     commit('loginSuccess', user)
                     return Promise.resolve(user)
                 })
@@ -32,21 +40,19 @@ export const auth = {
         loginSuccess(state, user) {
             if (user.adminPanel) {
                 state.user = {
-                    role: user.adminPanel.user_role,
-                    theme: user.adminPanel.theme
+                    role: user.adminPanel.user_role
                 }
+                state.theme = user.adminPanel.theme
                 state.loggedIn = true
             }
         },
-        loginFailure(/*state*/) {
-            this.reset()
-            /*state.user = {}
-            state.loggedIn = false*/
+        loginFailure(state) {
+            state.user = {}
+            state.loggedIn = false
         },
-        logout(/*state*/) {
-            this.reset()
-            /*state.user = {}
-            state.loggedIn = false*/
+        logout(state) {
+            state.user = {}
+            state.loggedIn = false
         }
     }
 };

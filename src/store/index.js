@@ -50,8 +50,12 @@ export default new Vuex.Store({
         }
     },
     mutations: {
-        setError(state, error){
-            state.errors = state.errors.concat(error)
+        setError(state, errors){
+            state.errors = state.errors.concat(errors)
+            setTimeout(() => {
+                state.errors = state.errors.slice(errors.length)
+            }, 3000)
+
         },
         dropError(state) {
             state.errors = []

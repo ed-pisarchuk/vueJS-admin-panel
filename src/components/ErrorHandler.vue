@@ -5,12 +5,12 @@
         v-model="this.$store.getters.isError"
         timeout="-1"
     >
-      <template v-for="(error, index) in this.$store.state.errors">
-
+      <template v-for="(error, index) in $store.state.errors">
         <div :key="index">
           <bold><span style="color: #F44336">{{ error.code }}</span> {{ error.title }}:</bold>
           {{ error.description }}
         </div>
+
       </template>
       <v-btn style="float: right"
              @click="dropError"

@@ -1,38 +1,29 @@
 <template>
-  <div>
     <v-card>
-      <p style="color: rebeccapurple">{{ $route.name }}</p>
-  <v-treeview
-      rounded
-      hoverable
-      activatable
-      dark
-      :items="items"
-  ></v-treeview>
-      <tree></tree>
+      <v-treeview
+          rounded
+          hoverable
+          activatable
+          :items="items"
+      ></v-treeview>
     </v-card>
-  </div>
 </template>
 
 <script>
-import {UlinksService} from "@/api/ulinks";
-import Tree from "@/components/Tree";
+ import {UlinksService} from "@/api/ulinks";
 
 export default {
   name: "Links",
-  components: {Tree},
+  components: {},
   props: {
     text: String
   },
   data: () => ({
     items: [
-      {
-        id: 1,
-        name: 'Applications :'}]
+      {}]
   }),
   created() {
     new UlinksService(this.$store.getters.baseURL).getList().then(data => {
-      alert(JSON.stringify(data))
       this.items = data
     })
   }

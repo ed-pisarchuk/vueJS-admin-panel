@@ -35,20 +35,22 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
         if (store.state.auth.loggedIn) {
-            let role = store.state.auth.user.role || 'guest'
-            for (let route of to.matched) {
-                if (route.meta.permissionDeniedFor && route.meta.permissionDeniedFor.includes(role)) {
-                    next('/')
+            store.dispatch('auth/checkAuth').then(() => {
+                if (!store.state.auth.loggedIn) {
+                    next('/login')
                 }
-            }
-            alert(JSON.stringify(store.state.auth))
-            next()
+                let role = store.state.auth.user.role || 'guest'
+                for (let route of to.matched) {
+                    if (route.meta.permissionDeniedFor && route.meta.permissionDeniedFor.includes(role)) {
+                        next('/')
+                    }
+                }
+            })
         } else {
             next('/login')
         }
-    } else {
-        next()
     }
+    next()
 })
 
 export default router
