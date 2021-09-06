@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Links from "../views/Links";
+import Main from "../views/Main";
 
-import store from '@/store'
+// import store from '@/store'
 const NavLoader = require('@/utils/nav-loader')
 const Loader = new NavLoader()
-const NavGroupB = require('@/router/nav-group-b')
-const NavGroupA = require('@/router/nav-group-a')
+const NavGroupB = require('@/router/contacts')
+const NavGroupA = require('@/router/admin')
 
 Vue.use(VueRouter)
 
@@ -14,10 +16,26 @@ const routes = [
         name: 'Главная',
         path: '/',
         component: Loader.loadBase('Layout'),
-        children: [].concat(NavGroupA, NavGroupB),
+        children: [{
+            name: '',
+            path: '/',
+            component: Main,
+            meta: {
+                requiresAuth: true,
+                icon: 'mdi_home'
+
+            }
+        },{
+            path: 'ulinks',
+            name: 'Полезные ссылки',
+            component: Links,
+            meta: {
+                requiresAuth: true,
+                transitionName: 'slide'
+            }
+        }].concat(NavGroupA, NavGroupB),
         meta: {
             requiresAuth: true,
-            permissionDeniedFor: ['guest'],
             icon: 'mdi_home'
         }
     },
@@ -32,7 +50,7 @@ const router = new VueRouter({
     routes
 })
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
         if (store.state.auth.loggedIn) {
             store.dispatch('auth/checkAuth').then(() => {
@@ -51,6 +69,6 @@ router.beforeEach((to, from, next) => {
         }
     }
     next()
-})
+})*/
 
 export default router

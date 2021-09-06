@@ -13,13 +13,13 @@ export default {
     items: [
       {
         id: 1,
-        name: 'Applications :'/*,
+        name: 'Applications :',
         children: [
           { id: 2, name: 'Calendar : app' },
           { id: 3, name: 'Chrome : app' },
           { id: 4, name: 'Webstorm : app' },
-        ],*/
-      }/*,
+        ],
+      },
       {
         id: 5,
         name: 'Documents :',
@@ -80,7 +80,7 @@ export default {
           { id: 24, name: 'Intro : mov' },
           { id: 25, name: 'Conference introduction : avi' },
         ],
-      },*/
+      },
     ],
   }),
 }
