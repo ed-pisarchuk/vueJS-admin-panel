@@ -1,4 +1,4 @@
-# untitled
+# Заготовка проекта на vue
 
 ## Project setup
 ```
